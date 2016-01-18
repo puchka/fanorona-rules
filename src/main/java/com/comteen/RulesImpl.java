@@ -14,10 +14,10 @@ public class RulesImpl implements Rules {
 	 * 
 	 */
 	public boolean processChange(int[][] board,
-                                 int oldX,
-                                 int oldY,
-								 int x, 
-								 int y) {
+                                     int oldX,
+                                     int oldY,
+				     int x, 
+				     int y) {
 		boolean res = true;
 		if(checkIfNextPositionValid(board, x, y)) {
 			board[x][y] = board[oldX][oldY];
