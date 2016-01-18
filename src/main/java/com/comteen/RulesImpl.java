@@ -13,9 +13,9 @@ public class RulesImpl implements Rules {
 	 * Processing move, change and return boolean value
 	 * 
 	 */
-	public boolean processChange(int[][] board, 
-								 int oldX,
-								 int oldY,
+	public boolean processChange(int[][] board,
+                                 int oldX,
+                                 int oldY,
 								 int x, 
 								 int y) {
 		boolean res = true;
