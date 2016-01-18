@@ -7,7 +7,10 @@ import org.junit.Test;
 public class GameTU {
 	
 	private GameImpl game = null;
-
+	
+	/*
+	 * 
+	 */
 	@Test
 	public void testHandleGame() {
 		assertEquals(0l, 0l);
