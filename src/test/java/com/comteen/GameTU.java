@@ -2,11 +2,22 @@ package com.comteen;
 
 import static org.junit.Assert.*;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class GameTU {
 	
 	private GameImpl game = null;
+	
+	@Before
+	public void setUp() throws Exception {
+		game = new GameImpl();
+	}
+
+	@After
+	public void tearDown() throws Exception {
+	}
 	
 	/*
 	 * 
@@ -20,17 +31,6 @@ public class GameTU {
 	public void testSetBoard() {
 		game = new GameImpl();
 		String states = "BBBBBBBBBWWWWWWWWW";
-		game.setBoard(states);
-		/*for(int i = 0; i < 5 ;i++) {
-			for(int j = 0; j < 9; j++) {
-				System.out.print(game.getBoard()[i][j]);
-			}
-			System.out.print("\n");
-		}*/
-		game.setPosition(24);
-		System.out.println(game.getxPoint());
-		System.out.println(game.getyPoint());
-		game.move(9);
 	}
 
 }

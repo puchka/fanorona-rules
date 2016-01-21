@@ -6,6 +6,6 @@ public interface Rules {
 
 	boolean processChange(int[][] board, int oldX, int oldY, int x, int y);
 
-	void eliminateAdversary();
+	void eliminateAdversary(int[][] board, int direction);
 
 }
