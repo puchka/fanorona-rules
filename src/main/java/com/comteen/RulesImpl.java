@@ -26,9 +26,14 @@ public class RulesImpl implements Rules {
 
 	/**
 	 * Check if the position cible is valid
+	 * Next stone empty, axis (x, y) is not out of range
 	 */
 	public boolean checkIfNextPositionValid(int[][] board, int x, int y) {
-		return (board[x][y] == 0);
+		boolean isValid = false;
+		if (board[x][y] == 0 && (x >= 0 && x <= 4) && (y >= 0 && x <= 8)) {
+			isValid = true;
+		}
+		return isValid;
 	}
 
 	/**
@@ -41,16 +46,33 @@ public class RulesImpl implements Rules {
 		if (checkIfNextPositionValid(board, x, y)) {
 			board[x][y] = board[oldX][oldY];
 			board[oldX][oldY] = 0;
+			eliminateAdversary(board, 0);
 			res = true;
 		}
 		return res;
 	}
 
 	/**
-	 * 
+	 * The elimination is based on direction of the stone
+	 * and we replace the stone opposite by 0 i.e empty 
 	 */
 	public void eliminateAdversary(int[][] board, int direction) {
-		
+		int x = xNextPoint, y = yNextPoint;
+		int player = board[x][y];
+		if (direction == Direction.TOP_RIGHT || direction == Direction.BOTOM_LEFT) {
+			while (x >= 0 && y <= 8) {
+				x = x - 1;
+				y = y + 1;
+				if (board[x][y] == player) {
+					break;
+				} else if (board[x][y] == 0) {
+					continue;
+				} else {
+					// Eliminate adversary
+					board[x][y] = 0;
+				}
+			}
+		}
 	}
 
 	/**
