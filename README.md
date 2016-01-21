@@ -1,3 +1,2 @@
-# fanorona_api
-API fanorona
-Target : Provide Standard API for the Fanorona Game
+# API fanorona
+This API is a standard java program to handle the rules of the fanorona game.
