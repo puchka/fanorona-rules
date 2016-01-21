@@ -59,10 +59,10 @@ public class RulesImpl implements Rules {
 	public void eliminateAdversary(int[][] board, int direction) {
 		int x = xNextPoint, y = yNextPoint;
 		int player = board[x][y];
-		if (direction == Direction.TOP_RIGHT || direction == Direction.BOTOM_LEFT) {
+		if (direction == Direction.TOP_RIGHT || direction == Direction.BOTTOM_LEFT) {
+			x = x - 1;
+			y = y + 1;
 			while (x >= 0 && y <= 8) {
-				x = x - 1;
-				y = y + 1;
 				if (board[x][y] == player) {
 					break;
 				} else if (board[x][y] == 0) {
@@ -71,6 +71,8 @@ public class RulesImpl implements Rules {
 					// Eliminate adversary
 					board[x][y] = 0;
 				}
+				x = x - 1;
+				y = y + 1;
 			}
 		}
 	}
@@ -122,7 +124,7 @@ public class RulesImpl implements Rules {
 			yNextPoint = yPoint + 1;
 			xNextPoint = xPoint;
 			break;
-		case Direction.BOTOM_LEFT:
+		case Direction.BOTTOM_LEFT:
 			yNextPoint = yPoint - 1;
 			xNextPoint = xPoint + 1;
 			break;

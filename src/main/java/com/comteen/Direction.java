@@ -13,7 +13,7 @@ public interface Direction {
 	int TOP_RIGHT = 3;
 	int MIDDLE_LEFT = 4;
 	int MIDDLE_RIGHT = 5;
-	int BOTOM_LEFT = 6;
+	int BOTTOM_LEFT = 6;
 	int BOTTOM_MIDDLE = 7;
 	int BOTTOM_RIGHT = 8;
 }
