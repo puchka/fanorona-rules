@@ -30,7 +30,7 @@ public class RulesImpl implements Rules {
 	 */
 	public boolean checkIfNextPositionValid(int[][] board, int x, int y) {
 		boolean isValid = false;
-		if (board[x][y] == 0 && (x >= 0 && x <= 4) && (y >= 0 && x <= 8)) {
+		if ((x >= 0 && x <= 4) && (y >= 0 && y <= 8) && board[x][y] == 0) {
 			isValid = true;
 		}
 		return isValid;
