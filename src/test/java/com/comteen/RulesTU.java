@@ -25,6 +25,7 @@ public class RulesTU {
 
 	@After
 	public void tearDown() throws Exception {
+		
 	}
 
 	@Test
