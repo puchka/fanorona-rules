@@ -34,11 +34,11 @@ public class RulesTU {
 
 	@Test
 	public void checkIfNextPositionValidTU() {
-		assertFalse(rules.checkIfNextPositionValid(board, 0, 2));
-		assertTrue(rules.checkIfNextPositionValid(board, 0, 0));
-		assertFalse(rules.checkIfNextPositionValid(board, -1, 2));
-		assertFalse(rules.checkIfNextPositionValid(board, 0, 9));
-		assertFalse(rules.checkIfNextPositionValid(board, -1, 9));
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(0, 2)));
+		assertTrue(rules.checkIfNextPositionValid(board, new Position(0, 0)));
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(-1, 2)));
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(0, 9)));
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(-1, 9)));
 	}
 	
 	@Test

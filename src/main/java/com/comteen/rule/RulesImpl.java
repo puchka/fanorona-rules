@@ -27,7 +27,9 @@ public class RulesImpl implements Rules {
 	 * Check if the position cible is valid Next stone empty, axis (x, y) is not
 	 * out of range
 	 */
-	public boolean checkIfNextPositionValid(int[][] board, int x, int y) {
+	public boolean checkIfNextPositionValid(int[][] board, Position next) {
+		int x = next.getX();
+		int y = next.getY();
 		boolean isValid = false;
 		if ((x >= 0 && x <= 4) && (y >= 0 && y <= 8) && board[x][y] == 0) {
 			isValid = true;
@@ -46,7 +48,7 @@ public class RulesImpl implements Rules {
 		int oldY = current.getY();
 		int x = next.getX();
 		int y = next.getY();
-		if (checkIfNextPositionValid(board, x, y)) {
+		if (checkIfNextPositionValid(board, next)) {
 			board[x][y] = board[oldX][oldY];
 			board[oldX][oldY] = 0;
 			eliminateAdversary(board, 0, next);

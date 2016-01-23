@@ -4,7 +4,7 @@ import com.comteen.common.Position;
 
 public interface Rules {
 
-	boolean checkIfNextPositionValid(int[][] board, int x, int y);
+	boolean checkIfNextPositionValid(int[][] board, Position next);
 
 	boolean processChange(int[][] board, Position current, Position next);
 

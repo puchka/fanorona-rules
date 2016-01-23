@@ -100,7 +100,7 @@ public class GameImpl implements Game {
 	 */
 	public void move(int direction) {
 		if (currentPosition != null) {
-			currentPosition = new Position();
+			nextPosition = new Position();
 			int yNextPoint = 0, xNextPoint = 0;
 			int yPoint = currentPosition.getY();
 			int xPoint = currentPosition.getX();
