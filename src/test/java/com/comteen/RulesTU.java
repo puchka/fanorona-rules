@@ -40,8 +40,8 @@ public class RulesTU {
 	@Test
 	public void eliminateAdversaryTU() {
 		//After move
-		rules.setxNextPoint(3);
-		rules.setyNextPoint(1);
+		Position nextPosition = new Position(3,1);
+		rules.setNextPosition(nextPosition);
 		rules.eliminateAdversary(board, Direction.TOP_RIGHT);
 		assertEquals(0, board[2][2]);
 		assertEquals(0, board[1][3]);

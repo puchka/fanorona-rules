@@ -8,9 +8,7 @@ package com.comteen;
  */
 public class RulesImpl implements Rules {
 
-	private int xPoint, yPoint;
-
-	private int xNextPoint, yNextPoint;
+	private Position currentPosition, nextPosition;
 
 	private static RulesImpl rulesImpl = null;
 
@@ -25,8 +23,8 @@ public class RulesImpl implements Rules {
 	}
 
 	/**
-	 * Check if the position cible is valid
-	 * Next stone empty, axis (x, y) is not out of range
+	 * Check if the position cible is valid Next stone empty, axis (x, y) is not
+	 * out of range
 	 */
 	public boolean checkIfNextPositionValid(int[][] board, int x, int y) {
 		boolean isValid = false;
@@ -53,11 +51,11 @@ public class RulesImpl implements Rules {
 	}
 
 	/**
-	 * The elimination is based on direction of the stone
-	 * and we replace the stone opposite by 0 i.e empty 
+	 * The elimination is based on direction of the stone and we replace the
+	 * stone opposite by 0 i.e empty
 	 */
 	public void eliminateAdversary(int[][] board, int direction) {
-		int x = xNextPoint, y = yNextPoint;
+		int x = nextPosition.getX(), y = nextPosition.getY();
 		int player = board[x][y];
 		if (direction == Direction.TOP_RIGHT || direction == Direction.BOTTOM_LEFT) {
 			x = x - 1;
@@ -83,17 +81,17 @@ public class RulesImpl implements Rules {
 	 * @param index
 	 */
 	public void setPosition(int index) {
-		this.yPoint = (index % 9) - 1;
+		currentPosition.setY((index % 9) - 1);
 		if (index <= 9) {
-			xPoint = 0;
+			currentPosition.setX(0);
 		} else if (index <= 18) {
-			xPoint = 1;
+			currentPosition.setX(1);
 		} else if (index <= 27) {
-			xPoint = 2;
+			currentPosition.setX(2);
 		} else if (index <= 36) {
-			xPoint = 3;
+			currentPosition.setX(3);
 		} else if (index <= 45) {
-			xPoint = 4;
+			currentPosition.setX(4);
 		}
 	}
 
@@ -103,6 +101,9 @@ public class RulesImpl implements Rules {
 	 * @param direction
 	 */
 	public void move(int direction) {
+		int yNextPoint = 0, xNextPoint = 0;
+		int yPoint = currentPosition.getY();
+		int xPoint = currentPosition.getX();
 		switch (direction) {
 		case Direction.TOP_LEFT:
 			yNextPoint = yPoint - 1;
@@ -137,39 +138,24 @@ public class RulesImpl implements Rules {
 			xNextPoint = xPoint + 1;
 			break;
 		}
-		System.out.println("yNext : " + yNextPoint + " , xNext : " + xNextPoint);
+		nextPosition.setX(xNextPoint);
+		nextPosition.setY(yNextPoint);
 	}
 
-	public int getxPoint() {
-		return xPoint;
+	public Position getCurrentPosition() {
+		return currentPosition;
 	}
 
-	public void setxPoint(int xPoint) {
-		this.xPoint = xPoint;
+	public void setCurrentPosition(Position currentPosition) {
+		this.currentPosition = currentPosition;
 	}
 
-	public int getyPoint() {
-		return yPoint;
+	public Position getNextPosition() {
+		return nextPosition;
 	}
 
-	public void setyPoint(int yPoint) {
-		this.yPoint = yPoint;
-	}
-
-	public int getxNextPoint() {
-		return xNextPoint;
-	}
-
-	public void setxNextPoint(int xNextPoint) {
-		this.xNextPoint = xNextPoint;
-	}
-
-	public int getyNextPoint() {
-		return yNextPoint;
-	}
-
-	public void setyNextPoint(int yNextPoint) {
-		this.yNextPoint = yNextPoint;
+	public void setNextPosition(Position nextPosition) {
+		this.nextPosition = nextPosition;
 	}
 
 }
