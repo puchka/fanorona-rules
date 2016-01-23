@@ -1,4 +1,4 @@
-package com.comteen;
+package com.comteen.common;
 
 /**
  * Position of Stone

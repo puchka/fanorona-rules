@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.comteen;
+package com.comteen.common;
 
 /**
  * @author rama

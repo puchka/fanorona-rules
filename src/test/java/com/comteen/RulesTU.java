@@ -6,6 +6,10 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.comteen.common.Direction;
+import com.comteen.common.Position;
+import com.comteen.rule.RulesImpl;
+
 public class RulesTU {
 	
 	private RulesImpl rules = null;
@@ -41,8 +45,7 @@ public class RulesTU {
 	public void eliminateAdversaryTU() {
 		//After move
 		Position nextPosition = new Position(3,1);
-		rules.setNextPosition(nextPosition);
-		rules.eliminateAdversary(board, Direction.TOP_RIGHT);
+		rules.eliminateAdversary(board, Direction.TOP_RIGHT, nextPosition);
 		assertEquals(0, board[2][2]);
 		assertEquals(0, board[1][3]);
 		assertEquals(2, board[0][4]);
