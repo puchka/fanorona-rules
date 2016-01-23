@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.comteen.common.Direction;
+import com.comteen.common.Player;
 import com.comteen.common.Position;
 import com.comteen.rule.RulesImpl;
 
@@ -34,11 +35,15 @@ public class RulesTU {
 
 	@Test
 	public void checkIfNextPositionValidTU() {
-		assertFalse(rules.checkIfNextPositionValid(board, new Position(0, 2)));
-		assertTrue(rules.checkIfNextPositionValid(board, new Position(0, 0)));
-		assertFalse(rules.checkIfNextPositionValid(board, new Position(-1, 2)));
-		assertFalse(rules.checkIfNextPositionValid(board, new Position(0, 9)));
-		assertFalse(rules.checkIfNextPositionValid(board, new Position(-1, 9)));
+		Player player = new Player(1);
+		player.setLastPosition(new Position(0,3));
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(0, 3), player));
+		
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(0, 2), player));
+		assertTrue(rules.checkIfNextPositionValid(board, new Position(0, 0), player));
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(-1, 2), player));
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(0, 9), player));
+		assertFalse(rules.checkIfNextPositionValid(board, new Position(-1, 9), player));
 	}
 	
 	@Test

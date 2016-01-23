@@ -1,6 +1,7 @@
 package com.comteen.rule;
 
 import com.comteen.common.Direction;
+import com.comteen.common.Player;
 import com.comteen.common.Position;
 
 /**
@@ -27,12 +28,14 @@ public class RulesImpl implements Rules {
 	 * Check if the position cible is valid Next stone empty, axis (x, y) is not
 	 * out of range
 	 */
-	public boolean checkIfNextPositionValid(int[][] board, Position next) {
+	public boolean checkIfNextPositionValid(int[][] board, Position next, Player player) {
 		int x = next.getX();
 		int y = next.getY();
 		boolean isValid = false;
 		if ((x >= 0 && x <= 4) && (y >= 0 && y <= 8) && board[x][y] == 0) {
-			isValid = true;
+			if (!player.isEqualToLastPosition(next)) {
+				isValid = true;
+			}
 		}
 		return isValid;
 	}
@@ -42,16 +45,16 @@ public class RulesImpl implements Rules {
 	 * either percussion or
 	 * 
 	 */
-	public boolean processChange(int[][] board, Position current, Position next) {
+	public boolean processChange(int[][] board, Position current, Position next, Player player, int direction) {
 		boolean res = false;
 		int oldX = current.getX();
 		int oldY = current.getY();
 		int x = next.getX();
 		int y = next.getY();
-		if (checkIfNextPositionValid(board, next)) {
+		if (checkIfNextPositionValid(board, next, player)) {
 			board[x][y] = board[oldX][oldY];
 			board[oldX][oldY] = 0;
-			eliminateAdversary(board, 0, next);
+			eliminateAdversary(board, direction, next);
 			res = true;
 		}
 		return res;
@@ -63,7 +66,7 @@ public class RulesImpl implements Rules {
 	 */
 	public void eliminateAdversary(int[][] board, int direction, Position nextPosition) {
 		int x = nextPosition.getX(), y = nextPosition.getY();
-		int player = board[x][y];
+		int player = board[x][y];// Get player Id
 		if (direction == Direction.TOP_RIGHT || direction == Direction.BOTTOM_LEFT) {
 			x = x - 1;
 			y = y + 1;
