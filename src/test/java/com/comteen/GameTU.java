@@ -18,7 +18,7 @@ public class GameTU {
 
 	@Before
 	public void setUp() throws Exception {
-		game = GameImpl.getInstance();
+		game = new GameImpl();
 		states = "BBBBBBBBB" + "BBBBBBBBB" + "BWBWEBWBW" + "WWWWWWWWW" + "WWWWWWWWW";
 	}
 
@@ -51,6 +51,7 @@ public class GameTU {
 
 	@Test
 	public void getStringBoardTU() {
+		game.setBoard(states);
 		String states = game.getStringBoard();
 		assertEquals("BBBBBBBBBBBBBBBBBBBWBWEBWBWWWWWWWWWWWWWWWWWWW", states);
 	}

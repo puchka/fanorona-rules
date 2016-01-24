@@ -14,7 +14,9 @@ import com.comteen.rule.Rules;
 import com.comteen.rule.RulesImpl;
 
 /**
- * @author rama Singleton
+ * This is the game entrypoint
+ * 
+ * @author rama
  */
 public class GameImpl implements Game {
 
@@ -22,23 +24,14 @@ public class GameImpl implements Game {
 
 	private Position currentPosition, nextPosition;
 
-	private static Player[] player = new Player[2];
+	private Player[] player = new Player[2];
 
-	private static Rules rules = RulesImpl.getInstance();
+	private Rules rules = RulesImpl.getInstance();
 
-	private static GameImpl gameImpl = null;
-
-	private GameImpl() {
-	}
-
-	public static synchronized GameImpl getInstance() {
-		if (gameImpl == null) {
-			gameImpl = new GameImpl();
-			// Initialization player
-			player[0] = new Player(1);
-			player[1] = new Player(2);
-		}
-		return gameImpl;
+	public GameImpl() {
+		// Initialization player
+		player[0] = new Player(1);
+		player[1] = new Player(2);
 	}
 
 	/**
