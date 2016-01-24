@@ -1,5 +1,6 @@
 package com.comteen;
 
+import com.comteen.common.Parameter;
 import com.comteen.common.Result;
 
 /**
@@ -9,7 +10,7 @@ import com.comteen.common.Result;
  */
 public interface Game {
 	
-	Result<String> handleGame(String states, int position, int direction);
+	Result<String> handleGame(String states, Parameter param);
 	
 	default void handleIAGame(String states) {
 		//TODO MinMax Implementation

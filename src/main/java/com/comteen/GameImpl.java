@@ -4,6 +4,7 @@
 package com.comteen;
 
 import com.comteen.common.Direction;
+import com.comteen.common.Parameter;
 import com.comteen.common.Player;
 import com.comteen.common.Position;
 import com.comteen.common.Result;
@@ -43,17 +44,20 @@ public class GameImpl implements Game {
 	/**
 	 * Handle request for processing
 	 */
-	public Result<String> handleGame(String states, int position, int direction) {
+	public Result<String> handleGame(String states, Parameter param) {
 		Result<String> res = new Result<String>();
 		// Validate parameters
 		if (states != null && !states.isEmpty()) {
 			// Refresh model board
 			setBoard(states);
-			setCurrentPosition(position);
-			nextMove(direction);
+			setCurrentPosition(param.getPosition());
+			nextMove(param.getDirection());
 
 			// Processing
-			rules.processChange(board, currentPosition, nextPosition, getCurrentPlayer(), direction);
+			param.setCurrentPlayer(getCurrentPlayer());
+			param.setCurrentPosition(currentPosition);
+			param.setNextPosition(nextPosition);
+			rules.processChange(board, param);
 
 			// Format result
 			res.setResult(true);

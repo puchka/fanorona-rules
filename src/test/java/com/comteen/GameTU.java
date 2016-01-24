@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.comteen.common.Direction;
+import com.comteen.common.Parameter;
 import com.comteen.common.Result;
 
 public class GameTU {
@@ -30,7 +31,10 @@ public class GameTU {
 	 */
 	@Test
 	public void handleGameTU() {
-		Result<String> res = game.handleGame(states, 31, Direction.TOP_RIGHT);
+		Parameter param = new Parameter();
+		param.setDirection(Direction.TOP_RIGHT);
+		param.setPosition(31);
+		Result<String> res = game.handleGame(states, param);
 /*		System.out.println(res.getData().substring(0, 9));
 		System.out.println(res.getData().substring(9, 18));
 		System.out.println(res.getData().substring(18, 27));

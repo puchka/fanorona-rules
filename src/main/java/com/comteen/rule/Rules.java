@@ -1,14 +1,13 @@
 package com.comteen.rule;
 
-import com.comteen.common.Player;
-import com.comteen.common.Position;
+import com.comteen.common.Parameter;
 
 public interface Rules {
 
-	boolean checkIfNextPositionValid(int[][] board, Position next, Player player);
+	boolean checkIfNextPositionValid(int[][] board, Parameter param);
 
-	boolean processChange(int[][] board, Position current, Position next, Player player, int direction);
+	boolean processChange(int[][] board, Parameter param);
 
-	void eliminateAdversary(int[][] board, int direction, Position nextPosition);
+	void eliminateAdversary(int[][] board, Parameter param);
 
 }
