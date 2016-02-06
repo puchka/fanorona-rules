@@ -43,10 +43,12 @@ public class GameImpl implements Game {
 		if (states != null && !states.isEmpty()) {
 			// Refresh model board
 			setBoard(states);
-			setCurrentPosition(param.getPosition());
-			nextMove(param.getDirection());
+			transformIndexTo2DPosition(param.getPosition(), 1);
 
-			// Processing
+			// The api used or not direction parameter for the processing
+			nextMove(param.getDirection(), param.getPosition());
+
+			// Begin processing
 			param.setCurrentPlayer(getCurrentPlayer());
 			param.setCurrentPosition(currentPosition);
 			param.setNextPosition(nextPosition);
@@ -120,72 +122,73 @@ public class GameImpl implements Game {
 	 * 
 	 * @param index
 	 */
-	public void setCurrentPosition(int index) {
-		currentPosition = new Position();
-		currentPosition.setY((index % 9) - 1);
-		if (index <= 9) {
-			currentPosition.setX(0);
-		} else if (index <= 18) {
-			currentPosition.setX(1);
-		} else if (index <= 27) {
-			currentPosition.setX(2);
-		} else if (index <= 36) {
-			currentPosition.setX(3);
-		} else if (index <= 45) {
-			currentPosition.setX(4);
+	public void transformIndexTo2DPosition(int index, int type) {
+		if (type == 1) {
+			currentPosition = new Position();
+			currentPosition.setY((index % 9) - 1);
+			currentPosition.setX((index / 9));
+		} else {
+			nextPosition = new Position();
+			nextPosition.setY((index % 9) - 1);
+			nextPosition.setX((index / 9));
 		}
+
 	}
 
 	/**
 	 * Set the new position by using the direction Get next Position of the
-	 * Stone
+	 * piece if direction -1, we don't use the direction
 	 * 
 	 * @param direction
 	 */
-	public void nextMove(int direction) {
-		if (currentPosition != null) {
-			nextPosition = new Position();
-			int yNextPoint = 0, xNextPoint = 0;
-			int yPoint = currentPosition.getY();
-			int xPoint = currentPosition.getX();
-			switch (direction) {
-			case Direction.TOP_LEFT:
-				yNextPoint = yPoint - 1;
-				xNextPoint = xPoint - 1;
-				break;
-			case Direction.TOP_MIDDLE:
-				yNextPoint = yPoint;
-				xNextPoint = xPoint - 1;
-				break;
-			case Direction.TOP_RIGHT:
-				yNextPoint = yPoint + 1;
-				xNextPoint = xPoint - 1;
-				break;
-			case Direction.MIDDLE_LEFT:
-				yNextPoint = yPoint - 1;
-				xNextPoint = xPoint;
-				break;
-			case Direction.MIDDLE_RIGHT:
-				yNextPoint = yPoint + 1;
-				xNextPoint = xPoint;
-				break;
-			case Direction.BOTTOM_LEFT:
-				yNextPoint = yPoint - 1;
-				xNextPoint = xPoint + 1;
-				break;
-			case Direction.BOTTOM_MIDDLE:
-				yNextPoint = yPoint;
-				xNextPoint = xPoint + 1;
-				break;
-			case Direction.BOTTOM_RIGHT:
-				yNextPoint = yPoint + 1;
-				xNextPoint = xPoint + 1;
-				break;
+	public void nextMove(int direction, int index) {
+		if (direction != -1) {
+			if (currentPosition != null) {
+				nextPosition = new Position();
+				int yNextPoint = 0, xNextPoint = 0;
+				int yPoint = currentPosition.getY();
+				int xPoint = currentPosition.getX();
+				switch (direction) {
+				case Direction.TOP_LEFT:
+					yNextPoint = yPoint - 1;
+					xNextPoint = xPoint - 1;
+					break;
+				case Direction.TOP_MIDDLE:
+					yNextPoint = yPoint;
+					xNextPoint = xPoint - 1;
+					break;
+				case Direction.TOP_RIGHT:
+					yNextPoint = yPoint + 1;
+					xNextPoint = xPoint - 1;
+					break;
+				case Direction.MIDDLE_LEFT:
+					yNextPoint = yPoint - 1;
+					xNextPoint = xPoint;
+					break;
+				case Direction.MIDDLE_RIGHT:
+					yNextPoint = yPoint + 1;
+					xNextPoint = xPoint;
+					break;
+				case Direction.BOTTOM_LEFT:
+					yNextPoint = yPoint - 1;
+					xNextPoint = xPoint + 1;
+					break;
+				case Direction.BOTTOM_MIDDLE:
+					yNextPoint = yPoint;
+					xNextPoint = xPoint + 1;
+					break;
+				case Direction.BOTTOM_RIGHT:
+					yNextPoint = yPoint + 1;
+					xNextPoint = xPoint + 1;
+					break;
+				}
+				nextPosition.setX(xNextPoint);
+				nextPosition.setY(yNextPoint);
+			} else {
+				throw new FanoronaException("Invalid move. Current Position undefined");
 			}
-			nextPosition.setX(xNextPoint);
-			nextPosition.setY(yNextPoint);
 		} else {
-			throw new FanoronaException("Invalid move. Current Position undefined");
+			transformIndexTo2DPosition(index, 2);
 		}
 	}
 

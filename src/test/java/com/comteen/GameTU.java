@@ -58,7 +58,7 @@ public class GameTU {
 	
 	@Test
 	public void setCurrentPositionTU() {
-		game.setCurrentPosition(1);
+		game.transformIndexTo2DPosition(1,1);
 		int x = game.getCurrentPosition().getX();
 		int y = game.getCurrentPosition().getY();
 		assertEquals(0, x);

@@ -3,9 +3,9 @@ package com.comteen.common;
 public class Parameter {
 
 	// Direction of the Stone
-	private int direction;
+	private int direction = -1;
 
-	// Position of the Stone in the String
+	// Source position in the string state
 	private int position;
 
 	// Type move
