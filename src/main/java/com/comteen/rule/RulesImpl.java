@@ -1,6 +1,6 @@
 package com.comteen.rule;
 
-import com.comteen.common.Direction;
+import com.comteen.common.Move;
 import com.comteen.common.Parameter;
 import com.comteen.common.Player;
 import com.comteen.common.Position;
@@ -11,7 +11,7 @@ import com.comteen.common.Position;
  * @author rama
  *
  */
-public class RulesImpl implements Rules {
+public class RulesImpl extends Move implements Rules {
 
 	private static RulesImpl rulesImpl = null;
 
@@ -26,7 +26,7 @@ public class RulesImpl implements Rules {
 	}
 
 	/**
-	 * Check if the position cible is valid Next stone empty, axis (x, y) is not
+	 * Check if the next position is valid Next stone empty, axis (x, y) is not
 	 * out of range
 	 */
 	public boolean checkIfNextPositionValid(int[][] board, Parameter param) {
@@ -58,6 +58,8 @@ public class RulesImpl implements Rules {
 			board[x][y] = board[oldX][oldY];
 			board[oldX][oldY] = 0;
 			eliminateAdversary(board, param);
+			// Set last new position valid for current player
+			param.getCurrentPlayer().setLastPosition(param.getCurrentPosition());
 			res = true;
 		}
 		return res;
@@ -65,27 +67,24 @@ public class RulesImpl implements Rules {
 
 	/**
 	 * The elimination is based on direction of the stone and we replace the
-	 * stone opposite by 0 i.e empty
+	 * opposite stone by 0 i.e empty
 	 */
 	public void eliminateAdversary(int[][] board, Parameter param) {
 		int x = param.getNextPosition().getX(), y = param.getNextPosition().getY();
 		int player = board[x][y];// Get player Id
 		int direction = param.getDirection();
-		if (direction == Direction.TOP_RIGHT || direction == Direction.BOTTOM_LEFT) {
-			x = x - 1;
-			y = y + 1;
-			while (x >= 0 && y <= 8) {
-				if (board[x][y] == player) {
-					break;
-				} else if (board[x][y] == 0) {
-					continue;
-				} else {
-					// Eliminate adversary
-					board[x][y] = 0;
-				}
-				x = x - 1;
-				y = y + 1;
+		Position position = getNext(direction, param.getNextPosition());
+		while (isMoveValid(direction, position)) {
+			int item = board[position.getX()][position.getY()];
+			if (item == player) {
+				break;
+			} else if (item == 0) {
+				continue;
+			} else {
+				// Eliminate adversary
+				board[position.getX()][position.getY()] = 0;
 			}
+			position = getNext(direction, position);
 		}
 	}
 

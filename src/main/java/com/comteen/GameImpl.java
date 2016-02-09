@@ -3,7 +3,7 @@
  */
 package com.comteen;
 
-import com.comteen.common.Direction;
+import com.comteen.common.Move;
 import com.comteen.common.Parameter;
 import com.comteen.common.Player;
 import com.comteen.common.Position;
@@ -18,7 +18,7 @@ import com.comteen.rule.RulesImpl;
  * 
  * @author rama
  */
-public class GameImpl implements Game {
+public class GameImpl extends Move implements Game {
 
 	private int[][] board = new int[5][9];
 
@@ -29,7 +29,7 @@ public class GameImpl implements Game {
 	private Rules rules = RulesImpl.getInstance();
 
 	public GameImpl() {
-		// Initialization player
+		// Initialization player ids respectively 1 and 2
 		player[0] = new Player(1);
 		player[1] = new Player(2);
 	}
@@ -37,21 +37,22 @@ public class GameImpl implements Game {
 	/**
 	 * Handle request for processing
 	 */
-	public Result<String> handleGame(String states, Parameter param) {
+	public Result<String> handleGame(String states, Parameter param) throws FanoronaException {
 		Result<String> res = new Result<String>();
 		// Validate parameters
 		if (states != null && !states.isEmpty()) {
 			// Refresh model board
 			setBoard(states);
-			transformIndexTo2DPosition(param.getPosition(), 1);
+			transformIndexTo2DPosition(param.getSourceStatePosition(), 1);
 
 			// The api used or not direction parameter for the processing
-			nextMove(param.getDirection(), param.getPosition());
+			nextMove(param);
 
 			// Begin processing
 			param.setCurrentPlayer(getCurrentPlayer());
 			param.setCurrentPosition(currentPosition);
 			param.setNextPosition(nextPosition);
+			param.setDirection();
 			rules.processChange(board, param);
 
 			// Format result
@@ -141,54 +142,17 @@ public class GameImpl implements Game {
 	 * 
 	 * @param direction
 	 */
-	public void nextMove(int direction, int index) {
+	public void nextMove(Parameter param) {
+		int direction = param.getDirection();
+		int indexDestination = param.getDestStatePosition();
 		if (direction != -1) {
 			if (currentPosition != null) {
-				nextPosition = new Position();
-				int yNextPoint = 0, xNextPoint = 0;
-				int yPoint = currentPosition.getY();
-				int xPoint = currentPosition.getX();
-				switch (direction) {
-				case Direction.TOP_LEFT:
-					yNextPoint = yPoint - 1;
-					xNextPoint = xPoint - 1;
-					break;
-				case Direction.TOP_MIDDLE:
-					yNextPoint = yPoint;
-					xNextPoint = xPoint - 1;
-					break;
-				case Direction.TOP_RIGHT:
-					yNextPoint = yPoint + 1;
-					xNextPoint = xPoint - 1;
-					break;
-				case Direction.MIDDLE_LEFT:
-					yNextPoint = yPoint - 1;
-					xNextPoint = xPoint;
-					break;
-				case Direction.MIDDLE_RIGHT:
-					yNextPoint = yPoint + 1;
-					xNextPoint = xPoint;
-					break;
-				case Direction.BOTTOM_LEFT:
-					yNextPoint = yPoint - 1;
-					xNextPoint = xPoint + 1;
-					break;
-				case Direction.BOTTOM_MIDDLE:
-					yNextPoint = yPoint;
-					xNextPoint = xPoint + 1;
-					break;
-				case Direction.BOTTOM_RIGHT:
-					yNextPoint = yPoint + 1;
-					xNextPoint = xPoint + 1;
-					break;
-				}
-				nextPosition.setX(xNextPoint);
-				nextPosition.setY(yNextPoint);
+				nextPosition = getNext(direction, currentPosition);
 			} else {
 				throw new FanoronaException("Invalid move. Current Position undefined");
 			}
 		} else {
-			transformIndexTo2DPosition(index, 2);
+			transformIndexTo2DPosition(indexDestination, 2);
 		}
 	}
 
