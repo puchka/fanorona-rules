@@ -12,7 +12,7 @@ public class Parameter {
 	private int sourceStatePosition = -1;
 
 	// Type move
-	private int typeMove;
+	private int typeMove = 1;
 
 	// Current player
 	private Player currentPlayer;
@@ -23,6 +23,9 @@ public class Parameter {
 	// Next Position (Class), calculated field from destStatePosition
 	private Position nextPosition;
 
+	// Starting position for processing type move
+	private Position startProcessPosition;
+
 	public int getDirection() {
 		return direction;
 	}
@@ -30,18 +33,19 @@ public class Parameter {
 	public void setDirection(int direction) {
 		this.direction = direction;
 	}
-	
+
 	/**
 	 * Set direction using source and destination position
+	 * 
 	 * @param currentPosition
 	 * @param destination
 	 */
 	public void setDirection() {
-		if(direction == -1 && currentPosition != null && nextPosition != null) { 
+		if (direction == -1 && currentPosition != null && nextPosition != null) {
 			int yNextPoint = nextPosition.getY(), xNextPoint = nextPosition.getX();
 			int yPoint = currentPosition.getY();
 			int xPoint = currentPosition.getX();
-	
+
 			if ((yNextPoint == yPoint - 1) && (xNextPoint == xPoint - 1)) {
 				direction = Direction.TOP_LEFT;
 			} else if ((yNextPoint == yPoint) && (xNextPoint == xPoint - 1)) {
@@ -109,5 +113,15 @@ public class Parameter {
 	public void setDestStatePosition(int destStatePosition) {
 		this.destStatePosition = destStatePosition;
 	}
+
+	public Position getStartProcessPosition() {
+		return startProcessPosition;
+	}
+
+	public void setStartProcessPosition(Position startProcessPosition) {
+		this.startProcessPosition = startProcessPosition;
+	}
+
+	
 
 }

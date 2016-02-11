@@ -1,10 +1,22 @@
 package com.comteen.common;
 
 public abstract class Move {
-	
-	public static enum Type { ADVANCE, WITHDRAW, PAIKA, SACRIFICE }
 
-	/**5
+	public static enum Type {
+		ADVANCE, WITHDRAW, PAIKA, SACRIFICE
+	}
+
+	protected Type type;
+
+	protected void setTypeMove(int typeMove) {
+		if (typeMove == 1) {
+			type = Type.ADVANCE;
+		} else if (typeMove == -1) {
+			type = Type.WITHDRAW;
+		}
+	}
+
+	/**
 	 * Get the next Position
 	 * 
 	 * @param direction
@@ -52,7 +64,7 @@ public abstract class Move {
 		}
 		return new Position(xNextPoint, yNextPoint);
 	}
-	
+
 	/**
 	 * Get the next Position
 	 * 
@@ -91,6 +103,48 @@ public abstract class Move {
 			break;
 		}
 		return result;
+	}
+
+	/**
+	 * Change direction for type move withdraw
+	 * 
+	 * @param param
+	 * @return
+	 */
+	public void initMoveHandler(Parameter param) {
+		int direction = param.getDirection();
+		if (type != null && type == Type.WITHDRAW) {
+			switch (direction) {
+			case Direction.TOP_LEFT:
+				direction = Direction.BOTTOM_RIGHT;
+				break;
+			case Direction.TOP_MIDDLE:
+				direction = Direction.BOTTOM_MIDDLE;
+				break;
+			case Direction.TOP_RIGHT:
+				direction = Direction.BOTTOM_LEFT;
+				break;
+			case Direction.MIDDLE_LEFT:
+				direction = Direction.MIDDLE_RIGHT;
+				break;
+			case Direction.MIDDLE_RIGHT:
+				direction = Direction.MIDDLE_LEFT;
+				break;
+			case Direction.BOTTOM_LEFT:
+				direction = Direction.TOP_RIGHT;
+				break;
+			case Direction.BOTTOM_MIDDLE:
+				direction = Direction.TOP_MIDDLE;
+				break;
+			case Direction.BOTTOM_RIGHT:
+				direction = Direction.TOP_LEFT;
+				break;
+			}
+			param.setStartProcessPosition(param.getCurrentPosition());
+			param.setDirection(direction);
+		} else {
+			param.setStartProcessPosition(param.getNextPosition());
+		}
 	}
 
 }

@@ -70,17 +70,20 @@ public class RulesImpl extends Move implements Rules {
 	 * opposite stone by 0 i.e empty
 	 */
 	public void eliminateAdversary(int[][] board, Parameter param) {
+		setTypeMove(param.getTypeMove());
 		int x = param.getNextPosition().getX(), y = param.getNextPosition().getY();
 		int player = board[x][y];// Get player Id
+		
+		// Init the starting position
+		initMoveHandler(param);
 		int direction = param.getDirection();
-		Position position = getNext(direction, param.getNextPosition());
+		Position position = getNext(direction, param.getStartProcessPosition());
+		
 		while (isMoveValid(direction, position)) {
 			int item = board[position.getX()][position.getY()];
 			if (item == player) {
 				break;
-			} else if (item == 0) {
-				continue;
-			} else {
+			} else if (item != 0) {
 				// Eliminate adversary
 				board[position.getX()][position.getY()] = 0;
 			}

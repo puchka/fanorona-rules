@@ -33,57 +33,39 @@ public class GameTU {
 	public void handleGameTU() throws Exception {
 
 		// Test param one
-/*		Parameter param = new Parameter();
-		
-		param.setDirection(Direction.TOP_RIGHT);
-		param.setSourceStatePosition(31);
-	    Result<String> res = game.handleGame(states, param);
-	    
-	    setUp();*/
+		/*
+		 * Parameter param = new Parameter();
+		 * 
+		 * param.setDirection(Direction.TOP_RIGHT);
+		 * param.setSourceStatePosition(31); Result<String> res =
+		 * game.handleGame(states, param);
+		 * 
+		 * setUp();
+		 */
 
 		// Test param two
 		Parameter param = new Parameter();
 		param.setDirection(-1);
 		param.setSourceStatePosition(31);
 		param.setDestStatePosition(23);
+		// withdraw move
+		param.setTypeMove(1);
 		Result<String> res = game.handleGame(states, param);
 		
+		param.setDirection(-1);
+		param.setSourceStatePosition(24);
+		param.setDestStatePosition(15);
+		// withdraw move
+		param.setTypeMove(-1);
+		res = game.handleGame(res.getData(), param);
 		
-		// Test param 3
-		param = new Parameter();
-		param.setSourceStatePosition(23);
-		param.setDestStatePosition(31);
-		states = res.getData();
-		res = game.handleGame(states, param);
-		
-		// Test param 4
-		param = new Parameter();
-		param.setSourceStatePosition(21);
-		param.setDestStatePosition(31);
-		states = res.getData();
-		res = game.handleGame(states, param);
-		
-		// Test param 5
-		param = new Parameter();
-		param.setSourceStatePosition(30);
-		param.setDestStatePosition(21);
-		states = res.getData();
-		res = game.handleGame(states, param);
-		
-		// Test param 6
-		param = new Parameter();
-		param.setSourceStatePosition(31);
-		param.setDestStatePosition(30);
-		states = res.getData();
-		res = game.handleGame(states, param);
-		
-		// Test param 7
-		param = new Parameter();
-		param.setSourceStatePosition(2);
-		param.setDestStatePosition(12);
-		states = res.getData();
-		res = game.handleGame(states, param);
-		
+		param.setDirection(-1);
+		param.setSourceStatePosition(15);
+		param.setDestStatePosition(7);
+		// withdraw move
+		param.setTypeMove(-1);
+		res = game.handleGame(res.getData(), param);
+
 		printBoard(res);
 
 	}
